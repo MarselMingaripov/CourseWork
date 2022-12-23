@@ -13,21 +13,27 @@ public class Main {
         employees[8] = new Employee("ФИО9", 5, 18000);
         employees[9] = new Employee("ФИО10", 5, 19000);
 
-        printEmployees(employees);
+        /*printEmployees(employees);
 
         double salary = calcSalaryForMonth(employees);
         System.out.println(salary);
 
-        double minSalary = findMinSalary(employees);
-        System.out.println(minSalary);
+        Employee minSalaryEmployee = findMinSalary(employees);
+        System.out.println(minSalaryEmployee.toString());
 
-        double maxSalary = findMaxSalary(employees);
-        System.out.println(maxSalary);
+        Employee maxSalaryEmployee = findMaxSalary(employees);
+        System.out.println(maxSalaryEmployee.toString());
 
         double averageSalary = calcAverageSalary(employees);
         System.out.println(averageSalary);
 
         printName(employees);
+
+        Employee employees1 = findMinSalaryEmployeeInDepartment(3, employees);
+        System.out.println(employees1.toString());*/
+
+        /*findEmployeesWhoseSalaryIsLess(15000, employees);
+        findEmployeesWhoseSalaryIsMore(15000, employees);*/
 
 
     }
@@ -45,24 +51,28 @@ public class Main {
         return totalSalary;
     }
 
-    public static double findMinSalary(Employee[] employees){
+    public static Employee findMinSalary(Employee[] employees){
         double minSalary = employees[0].getSalary();
+        Employee minSalaryEmployee = employees[0];
         for (Employee employee : employees) {
             if (minSalary > employee.getSalary()) {
                 minSalary = employee.getSalary();
+                minSalaryEmployee = employee;
             }
         }
-        return minSalary;
+        return minSalaryEmployee;
     }
 
-    public static double findMaxSalary(Employee[] employees){
+    public static Employee findMaxSalary(Employee[] employees){
         double maxSalary = employees[0].getSalary();
+        Employee maxSalaryEmployee = employees[0];
         for (Employee employee : employees) {
             if (maxSalary < employee.getSalary()) {
                 maxSalary = employee.getSalary();
+                maxSalaryEmployee = employee;
             }
         }
-        return maxSalary;
+        return maxSalaryEmployee;
     }
 
     public static double calcAverageSalary(Employee[] employees){
@@ -73,6 +83,84 @@ public class Main {
     public static void printName(Employee[] employees){
         for (Employee employee : employees) {
             System.out.println(employee.getName());
+        }
+    }
+
+    public static void indexationOfSalary(Employee[] employees, double percent){
+        for (Employee employee:employees){
+            employee.setSalary(employee.getSalary() * percent);
+        }
+    }
+    public static Employee[] findEmployeesInDepartment(int department, Employee[] employees){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++){
+            if (employees[index].getDepartment() == department){
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++){
+            if (employees[index].getDepartment() == department){
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+        return employeesInDepartment;
+    }
+    public static Employee findMinSalaryEmployeeInDepartment(int department, Employee[] employees){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        return findMinSalary(findEmployeesInDepartment(department, employees));
+    }
+
+    public static Employee findMaxSalaryEmployeeInDepartment(int department, Employee[] employees){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        return findMaxSalary(findEmployeesInDepartment(department, employees));
+    }
+
+    public static double calcSalaryInDepartmentForMonth(int department, Employee[] employees){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        return calcSalaryForMonth(findEmployeesInDepartment(department, employees));
+    }
+
+    public static double caclAverageSalaryInDepartment(int department, Employee[] employees){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        return calcAverageSalary(findEmployeesInDepartment(department, employees));
+    }
+
+    public static void indexationSalaryInDepartment(int department, Employee[] employees, int percent){
+        if (department > 5){
+            throw new IllegalArgumentException();
+        }
+        indexationOfSalary(findEmployeesInDepartment(department, employees), percent);
+    }
+
+    public static void findEmployeesWhoseSalaryIsLess(int level, Employee[] employees){
+        for (Employee employee : employees) {
+            if (employee.getSalary() < level) {
+                System.out.println(employee.getId() + " " + employee.getName() + " " +
+                        employee.getSalary());
+            }
+        }
+    }
+
+    public static void findEmployeesWhoseSalaryIsMore(int level, Employee[] employees){
+        for (Employee employee : employees) {
+            if (employee.getSalary() >= level) {
+                System.out.println(employee.getId() + " " + employee.getName() + " " +
+                        employee.getSalary());
+            }
         }
     }
 }
