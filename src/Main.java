@@ -25,6 +25,5 @@ public class Main {
         eb.changeEmployee("ФИО10", 50000, 5);
         eb.printEmployees();
         eb.printNameInDepartment(5);
-
     }
 }
