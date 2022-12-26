@@ -1,17 +1,8 @@
 public class EmployeeBook {
 
-    private Employee[] employees = new Employee[10];
+    private final Employee[] employees = new Employee[10];
 
-
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employee[] employees) {
-        this.employees = employees;
-    }
-
-    public void printEmployees(Employee[] employees){
+    public void printEmployees() {
         for (Employee employee : employees) {
             if (employee != null) {
                 System.out.println(employee.toString());
@@ -19,7 +10,7 @@ public class EmployeeBook {
         }
     }
 
-    public double calcSalaryForMonth(Employee[] employees){
+    public double calcSalaryForMonth() {
         double totalSalary = 0;
         for (Employee employee : employees) {
             if (employee != null) {
@@ -29,46 +20,52 @@ public class EmployeeBook {
         return totalSalary;
     }
 
-    public Employee findMinSalary(Employee[] employees){
-        double minSalary = employees[0].getSalary();
+    public Employee findMinSalary() {
+        double minSalary = 0;
+        if (employees[0] != null) {
+            minSalary = employees[0].getSalary();
+        } else {
+            System.out.println("Массив пустой!");
+        }
         Employee minSalaryEmployee = employees[0];
         for (Employee employee : employees) {
-            if (employee != null) {
-                if (minSalary > employee.getSalary()) {
-                    minSalary = employee.getSalary();
-                    minSalaryEmployee = employee;
-                }
+            if (employee != null && minSalary > employee.getSalary()) {
+                minSalary = employee.getSalary();
+                minSalaryEmployee = employee;
             }
         }
         return minSalaryEmployee;
     }
 
-    public Employee findMaxSalary(Employee[] employees){
-        double maxSalary = employees[0].getSalary();
+    public Employee findMaxSalary() {
+        double maxSalary = 0;
+        if (employees[0] != null) {
+            maxSalary = employees[0].getSalary();
+        } else {
+            System.out.println("Массив пустой!");
+        }
         Employee maxSalaryEmployee = employees[0];
         for (Employee employee : employees) {
-            if (employee != null) {
-                if (maxSalary < employee.getSalary()) {
-                    maxSalary = employee.getSalary();
-                    maxSalaryEmployee = employee;
-                }
+            if (employee != null && maxSalary < employee.getSalary()) {
+                maxSalary = employee.getSalary();
+                maxSalaryEmployee = employee;
             }
         }
         return maxSalaryEmployee;
     }
 
-    public double calcAverageSalary(Employee[] employees){
-        double totalSalary = calcSalaryForMonth(employees);
+    public double calcAverageSalary() {
+        double totalSalary = calcSalaryForMonth();
         int countOfEmployees = 0;
-        for (Employee employee:employees) {
-            if (employee != null){
+        for (Employee employee : employees) {
+            if (employee != null) {
                 countOfEmployees++;
             }
         }
         return totalSalary / countOfEmployees;
     }
 
-    public void printName(Employee[] employees){
+    public void printName() {
         for (Employee employee : employees) {
             if (employee != null) {
                 System.out.println(employee.getName());
@@ -76,134 +73,257 @@ public class EmployeeBook {
         }
     }
 
-    public void indexationOfSalary(Employee[] employees, double percent){
-        for (Employee employee:employees){
+    public void indexationOfSalary(double percent) {
+        for (Employee employee : employees) {
             if (employee != null) {
                 employee.setSalary((employee.getSalary() * percent) / 100 + employee.getSalary());
             }
         }
     }
-    public Employee[] findEmployeesInDepartment(int department, Employee[] employees){
-        if (department > 5){
+
+    public Employee[] findEmployeesInDepartment(int department) {
+        if (department > 5) {
             throw new IllegalArgumentException();
         }
         int counterOfEmployeesInDepartment = 0;
-        for (int index = 0; index < employees.length; index++){
-            if (employees[index] != null) {
-                if (employees[index].getDepartment() == department){
-                    counterOfEmployeesInDepartment++;
-                }
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
             }
         }
         Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
         int indexOfEmployeesInDepartment = 0;
-        for (int index = 0; index < employees.length; index++){
-            if (employees[index] != null) {
-                if (employees[index].getDepartment() == department){
-                    employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
-                    indexOfEmployeesInDepartment++;
-                }
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
             }
         }
         return employeesInDepartment;
     }
-    public Employee findMinSalaryEmployeeInDepartment(int department, Employee[] employees){
-        if (department > 5){
+
+    public Employee findMinSalaryEmployeeInDepartment(int department) {
+        if (department > 5) {
             throw new IllegalArgumentException();
         }
-        return findMinSalary(findEmployeesInDepartment(department, employees));
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+
+        double minSalary = 0;
+        if (employeesInDepartment[0] != null) {
+            minSalary = employeesInDepartment[0].getSalary();
+        } else {
+            System.out.println("Массив пустой!");
+        }
+        Employee minSalaryEmployee = employeesInDepartment[0];
+        for (Employee employee : employeesInDepartment) {
+            if (employee != null && minSalary > employee.getSalary()) {
+                minSalary = employee.getSalary();
+                minSalaryEmployee = employee;
+            }
+        }
+        return minSalaryEmployee;
     }
 
-    public Employee findMaxSalaryEmployeeInDepartment(int department, Employee[] employees){
-        if (department > 5){
+    public Employee findMaxSalaryEmployeeInDepartment(int department) {
+        if (department > 5) {
             throw new IllegalArgumentException();
         }
-        return findMaxSalary(findEmployeesInDepartment(department, employees));
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+        double maxSalary = 0;
+        if (employeesInDepartment[0] != null) {
+            maxSalary = employeesInDepartment[0].getSalary();
+        } else {
+            System.out.println("Массив пустой!");
+        }
+        Employee maxSalaryEmployee = employeesInDepartment[0];
+        for (Employee employee : employeesInDepartment) {
+            if (employee != null && maxSalary < employee.getSalary()) {
+                maxSalary = employee.getSalary();
+                maxSalaryEmployee = employee;
+            }
+        }
+        return maxSalaryEmployee;
     }
 
-    public double calcSalaryInDepartmentForMonth(int department, Employee[] employees){
-        if (department > 5){
+    public double calcSalaryInDepartmentForMonth(int department) {
+        if (department > 5) {
             throw new IllegalArgumentException();
         }
-        return calcSalaryForMonth(findEmployeesInDepartment(department, employees));
-    }
-
-    public double caclAverageSalaryInDepartment(int department, Employee[] employees){
-        if (department > 5){
-            throw new IllegalArgumentException();
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
         }
-        return calcAverageSalary(findEmployeesInDepartment(department, employees));
-    }
-
-    public void indexationSalaryInDepartment(int department, Employee[] employees, int percent){
-        if (department > 5){
-            throw new IllegalArgumentException();
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
         }
-        indexationOfSalary(findEmployeesInDepartment(department, employees), percent);
-    }
 
-    public void findEmployeesWhoseSalaryIsLess(int level, Employee[] employees){
-        for (Employee employee : employees) {
+        double totalSalary = 0;
+        for (Employee employee : employeesInDepartment) {
             if (employee != null) {
-                if (employee.getSalary() < level) {
-                    System.out.println(employee.getId() + " " + employee.getName() + " " +
-                            employee.getSalary());
-                }
+                totalSalary += employee.getSalary();
+            }
+        }
+        return totalSalary;
+    }
+
+    public double caclAverageSalaryInDepartment(int department) {
+        if (department > 5) {
+            throw new IllegalArgumentException();
+        }
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+        double totalSalary = calcSalaryForMonth();
+        int countOfEmployees = 0;
+        for (Employee employee : employeesInDepartment) {
+            if (employee != null) {
+                countOfEmployees++;
+            }
+        }
+        return totalSalary / countOfEmployees;
+    }
+
+    public void indexationSalaryInDepartment(int department, int percent) {
+        if (department > 5) {
+            throw new IllegalArgumentException();
+        }
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+
+        for (Employee employee : employeesInDepartment) {
+            if (employee != null) {
+                employee.setSalary((employee.getSalary() * percent) / 100 + employee.getSalary());
             }
         }
     }
 
-    public void findEmployeesWhoseSalaryIsMore(int level, Employee[] employees){
+    public void findEmployeesWhoseSalaryIsLess(int level) {
         for (Employee employee : employees) {
-            if (employee != null) {
-                if (employee.getSalary() >= level) {
-                    System.out.println(employee.getId() + " " + employee.getName() + " " +
-                            employee.getSalary());
-                }
+            if (employee != null && employee.getSalary() < level) {
+                System.out.println(employee.getId() + " " + employee.getName() + " " +
+                        employee.getSalary());
             }
         }
     }
 
-    public Employee[] createEmployee(Employee employee, Employee[] employees){
-        for (int index = 0; index < employees.length; index++){
-            if (employees[index] == null){
+    public void findEmployeesWhoseSalaryIsMore(int level) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getSalary() >= level) {
+                System.out.println(employee.getId() + " " + employee.getName() + " " +
+                        employee.getSalary());
+            }
+        }
+    }
+
+    public void createEmployee(Employee employee) {
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] == null) {
                 employees[index] = employee;
                 System.out.println("Работник создан!");
-                return employees;
+                return;
             } else {
                 if (index == employees.length - 1) {
                     System.out.println("Простите, места больше нет!");
                 }
             }
         }
-        return employees;
     }
 
-    public void deleteEmployee(String name, Employee[] employees){
-        for (int index = 0; index < employees.length; index++){
-            if (employees[index] != null){
-                if (employees[index].getName() == name){
-                    employees[index] = null;
-                }
+    public void deleteEmployee(String name) {
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getName() == name) {
+                employees[index] = null;
             }
         }
     }
 
-    public void changeEmployee(String name, int newSalary, int newDepartment, Employee[] employees){
-        if (newDepartment > 5){
+    public void changeEmployee(String name, int newSalary, int newDepartment) {
+        if (newDepartment > 5) {
             throw new IllegalArgumentException();
         }
-        for (int index = 0; index < employees.length; index++){
-            if (employees[index] != null){
-                if (employees[index].getName() == name){
-                    employees[index].setSalary(newSalary);
-                    employees[index].setDepartment(newDepartment);
-                }
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getName() == name) {
+                employees[index].setSalary(newSalary);
+                employees[index].setDepartment(newDepartment);
             }
         }
     }
 
-    public void printNameInDepartment(Employee[] employees, int department){
-        printName(findEmployeesInDepartment(department, employees));
+    public void printNameInDepartment(int department) {
+        int counterOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                counterOfEmployeesInDepartment++;
+            }
+        }
+        Employee[] employeesInDepartment = new Employee[counterOfEmployeesInDepartment];
+        int indexOfEmployeesInDepartment = 0;
+        for (int index = 0; index < employees.length; index++) {
+            if (employees[index] != null && employees[index].getDepartment() == department) {
+                employeesInDepartment[indexOfEmployeesInDepartment] = employees[index];
+                indexOfEmployeesInDepartment++;
+            }
+        }
+        for (Employee employee : employeesInDepartment) {
+            if (employee != null) {
+                System.out.println(employee.getName());
+            }
+        }
     }
 }

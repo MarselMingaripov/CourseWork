@@ -13,22 +13,18 @@ public class Main {
         Employee employee7 = new Employee("ФИО8", 4, 17000);
         Employee employee8 = new Employee("ФИО9", 5, 18000);
         Employee employee9 = new Employee("ФИО10", 5, 19000);
-        eb.setEmployees(eb.createEmployee(employee0, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee1, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee2, eb.getEmployees()));
-        /*eb.setEmployees(eb.createEmployee(employee3, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee4, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee5, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee6, eb.getEmployees()));*/
-        eb.setEmployees(eb.createEmployee(employee7, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee8, eb.getEmployees()));
-        eb.setEmployees(eb.createEmployee(employee9, eb.getEmployees()));
-        System.out.println(eb.findMinSalaryEmployeeInDepartment(5, eb.getEmployees()));
-        eb.indexationSalaryInDepartment(5, eb.getEmployees(), 30);
-        System.out.println(eb.calcAverageSalary(eb.getEmployees()));
-        eb.changeEmployee("ФИО10", 50000, 5, eb.getEmployees());
-        eb.printEmployees(eb.getEmployees());
-        eb.printNameInDepartment(eb.getEmployees(), 5);
+        eb.createEmployee(employee0);
+        eb.createEmployee(employee1);
+        eb.createEmployee(employee2);
+        eb.createEmployee(employee7);
+        eb.createEmployee(employee8);
+        eb.createEmployee(employee9);
+        System.out.println(eb.findMinSalaryEmployeeInDepartment(5));
+        eb.indexationSalaryInDepartment(5, 30);
+        System.out.println(eb.calcAverageSalary());
+        eb.changeEmployee("ФИО10", 50000, 5);
+        eb.printEmployees();
+        eb.printNameInDepartment(5);
 
     }
 }
